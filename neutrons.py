@@ -48,7 +48,7 @@ class NeutronTrack(ThreeDScene):
         self.play(Indicate(readout_plane, scale_factor=1.1, color=WHITE))
         # self.play(FadeOut(dots))
         self.wait(1)
-        self.begin_ambient_camera_rotation(rate=0.1, about="theta")
+        # self.begin_ambient_camera_rotation(rate=0.1, about="theta")
 
         del dots
         dots = VGroup()
@@ -97,6 +97,7 @@ class NeutronTrack(ThreeDScene):
         upper_dots = VGroup()
 
         for dot in dots:
+            print(axes.point_to_coords(dot.get_center()))
             if dot.get_x() <= -2.5:
                 upper_dots.add(dot)
 
