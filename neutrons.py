@@ -39,7 +39,7 @@ class NeutronTrack(ThreeDScene):
         self.wait(0.5)
 
         readout_plane = Square(side_length=3.5, color=BLUE, fill_opacity=0.5)
-        readout_plane.move_to(axes.coords_to_point(-2.5, 0, 0))
+        readout_plane.move_to(axes.coords_to_point(-2.6, 0, 0))
         self.play(DrawBorderThenFill(readout_plane))
 
         self.play(Create(dots))
@@ -55,7 +55,7 @@ class NeutronTrack(ThreeDScene):
         self.play(Indicate(readout_plane, scale_factor=1.1, color=WHITE))
         self.play(FadeOut(dots))
         self.wait(1)
-        # self.begin_ambient_camera_rotation(rate=0.1, about="theta")
+        self.begin_ambient_camera_rotation(rate=0.1, about="theta")
 
         del dots
         dots = VGroup()
@@ -87,6 +87,7 @@ class NeutronTrack(ThreeDScene):
                         radius=0.025, color=dot_color, fill_opacity=0.5)
             dots.add(dot)
 
+        self.play(Create(dots))
         self.wait(0.5)
         self.play(FadeIn(neutron_track))
         self.wait(2)
