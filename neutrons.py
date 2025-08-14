@@ -97,7 +97,7 @@ class NeutronTrack(ThreeDScene):
 
         for dot in reconstructed_dots:
             print(axes.point_to_coords(dot.get_center()))
-            if (axes.point_to_coords(dot.get_center()))[0] <= -2.5:
+            if ((axes.point_to_coords(dot.get_center()))[0] <= -2.5) & ((axes.point_to_coords(dot.get_center()))[2] >= 2.5):
                 upper_dots.add(dot)
 
         self.play(Indicate(upper_dots, scale_factor=1.1, color=ORANGE))
