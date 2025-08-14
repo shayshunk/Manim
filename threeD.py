@@ -67,7 +67,7 @@ class NeutronTrack(ThreeDScene):
 
         for i in range(100):
             self.play(dots[i].animate.move_to(
-                axes.color(x_locs[i], y_locs[i], 0)))
+                axes.coords_to_point(x_locs[i], y_locs[i], 0)))
 
         self.wait(0.5)
         self.play(FadeIn(neutron_track))
