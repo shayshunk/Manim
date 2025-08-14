@@ -13,7 +13,7 @@ class NeutronTrack(ThreeDScene):
         )
 
         neutron_track = Line3D(start=axes.coords_to_point(
-            0, 0, 0), end=axes.coords_to_point(-5.25, 0, 5.25), color=WHITE)
+            0, 0, 0), end=axes.coords_to_point(-5, 0, 5), color=WHITE)
 
         dots = VGroup()
 
@@ -46,12 +46,10 @@ class NeutronTrack(ThreeDScene):
         )
 
         self.play(Indicate(readout_plane, scale_factor=1.1, color=WHITE))
-        # self.play(FadeOut(dots))
         self.wait(1)
-        # self.begin_ambient_camera_rotation(rate=0.1, about="theta")
+        self.begin_ambient_camera_rotation(rate=0.1, about="theta")
 
-        del dots
-        dots = VGroup()
+        reconstructed_dots = VGroup()
 
         for i in range(100):
             rand_color = random.randint(1, 10)
@@ -84,23 +82,24 @@ class NeutronTrack(ThreeDScene):
 
             dot = Dot3D(point=axes.coords_to_point(xrand, yrand, zrand),
                         radius=0.025, color=dot_color, fill_opacity=0.5)
-            dots.add(dot)
+            reconstructed_dots.add(dot)
 
-        self.play(Create(dots))
+        self.play(Create(reconstructed_dots))
         self.wait(0.5)
         self.play(FadeIn(neutron_track))
+        self.play(FadeOut(dots))
 
-        midpoint = Line3D(start=axes.coords_to_point(-2.625, -1, 2.625),
-                          end=axes.coords_to_point(-2.625, 1, 2.625), color=WHITE)
-        self.play(Create(midpoint))
+        midpoint = Line3D(start=axes.coords_to_point(-2.5, -1, 2.5),
+                          end=axes.coords_to_point(-2.5, 1, 2.5), color=WHITE)
+        self.play(FadeIn(midpoint))
 
         upper_dots = VGroup()
 
-        for dot in dots:
+        for dot in reconstructed_dots:
             print(axes.point_to_coords(dot.get_center()))
-            if dot.get_x() <= -2.5:
+            if (axes.point_to_coords(dot.get_center()))[0] <= -2.5:
                 upper_dots.add(dot)
 
-        self.play(Indicate(upper_dots))
+        self.play(Indicate(upper_dots, scale_factor=1.1, color=ORANGE))
 
         self.wait(2)
