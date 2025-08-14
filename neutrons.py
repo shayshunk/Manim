@@ -89,4 +89,13 @@ class NeutronTrack(ThreeDScene):
         self.play(Create(dots))
         self.wait(0.5)
         self.play(FadeIn(neutron_track))
+
+        midpoint = Line3D(start=axes.coords_to_point(-2.75, -1, 2.75),
+                          end=axes.coords_to_point(-2.75, 1, 2.75), color=WHITE)
+        self.play(Create(midpoint))
+
+        upper_dots = [dot for dot in dots if dot.get_x() <= -2.75]
+
+        self.play(Indicate(upper_dots))
+
         self.wait(2)
