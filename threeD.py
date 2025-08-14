@@ -60,8 +60,8 @@ class NeutronTrack(ThreeDScene):
         self.wait(0.5)
         # self.begin_ambient_camera_rotation(rate=0.1, about="theta")
 
-        for i in range(100):
-            self.play(Create(dots[i], run_time=0.07))
+        dot_animations = [Create(dot) for dot in dots]
+        self.play(Succession(*dot_animations))
 
         self.wait(0.5)
 
@@ -69,8 +69,9 @@ class NeutronTrack(ThreeDScene):
 
         def set_z_coord(point):
             # The point is a numpy array [x, y, z]
-            x, y, _ = point
-            return axes.coords_to_point(x, y, target_z)
+            new_point = axes.point_to_coords(point)
+            new_point[2] = target_z
+            return axes.coords_to_point(new_point)
 
         self.play(dots.animate.apply_function(set_z_coord))
 
