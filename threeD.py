@@ -65,9 +65,14 @@ class NeutronTrack(ThreeDScene):
 
         self.wait(0.5)
 
-        for i in range(100):
-            self.play(dots[i].animate.move_to(
-                axes.coords_to_point(x_locs[i], y_locs[i], 0)))
+        target_z = 0
+
+        def set_z_coord(point):
+            # The point is a numpy array [x, y, z]
+            x, y, _ = point
+            return axes.coords_to_point(x, y, target_z)
+
+        self.play(dots.animate.apply_function(set_z_coord))
 
         self.wait(0.5)
         self.play(FadeIn(neutron_track))
