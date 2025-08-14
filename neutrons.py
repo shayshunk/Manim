@@ -5,8 +5,8 @@ import random
 class NeutronTrack(ThreeDScene):
     def construct(self):
         self.set_camera_orientation(phi=3*PI/8, theta=PI/6)
-        axes = ThreeDAxes(x_range=(-10, 10),
-                          y_range=(-10, 10), z_range=(-10, 10))
+        axes = ThreeDAxes(x_range=(-8, 8),
+                          y_range=(-8, 8), z_range=(-8, 8))
         labels = axes.get_axis_labels(
             Text(
                 "x-axis").scale(0.7), Text("y-axis").scale(0.45), Text("z-axis").scale(0.45)
@@ -26,6 +26,41 @@ class NeutronTrack(ThreeDScene):
             xrand = xrand + random.uniform(-0.25, 0.25)
             yrand = random.uniform(-0.5, 0.5)
             zrand = zrand + random.uniform(-0.5, 0.5)
+
+            dot = Dot3D(point=axes.coords_to_point(xrand, yrand, zrand),
+                        radius=0.025, color=WHITE, fill_opacity=0.5)
+            dots.add(dot)
+
+            x_locs.append(xrand)
+            y_locs.append(yrand)
+            z_locs.append(zrand)
+
+        self.play(Create(axes), Create(labels))
+        self.wait(0.5)
+
+        readout_plane = Square(side_length=3.5, color=BLUE, fill_opacity=0.5)
+        readout_plane.move_to(axes.coords_to_point(-2.5, 0, 0))
+        self.play(DrawBorderThenFill(readout_plane))
+
+        self.play(Create(dots))
+
+        self.play(
+            AnimationGroup(
+                *[dot.animate.set_z(0) for dot in dots],
+                lag_ratio=random.uniform(0.01, 0.025),
+                rate_func=lambda t: t ** 2  # Use a quadratic rate function for the falling effect
+            )
+        )
+
+        self.play(Indicate(readout_plane, scale_factor=1.1, color=WHITE))
+        self.play(FadeOut(dots))
+        self.wait(1)
+        # self.begin_ambient_camera_rotation(rate=0.1, about="theta")
+
+        del dots
+        dots = VGroup()
+
+        for i in range(100):
             rand_color = random.randint(1, 10)
             dot_color = BLUE
 
@@ -48,31 +83,9 @@ class NeutronTrack(ThreeDScene):
             elif rand_color == 9:
                 dot_color = BLUE_D
 
-            dot = Dot3D(point=axes.coords_to_point(xrand, yrand, zrand),
+            dot = Dot3D(point=axes.coords_to_point(x_locs[i], y_locs[i], z_locs[i]),
                         radius=0.025, color=dot_color, fill_opacity=0.5)
             dots.add(dot)
-
-            x_locs.append(xrand)
-            y_locs.append(yrand)
-            z_locs.append(zrand)
-
-        self.play(Create(axes), Create(labels))
-        self.wait(0.5)
-        # self.begin_ambient_camera_rotation(rate=0.1, about="theta")
-
-        # dot_animations = [Create(dot) for dot in dots]
-        # self.play(Succession(*dot_animations))
-
-        self.play(Create(dots))
-
-        self.wait(0.5)
-
-        self.play(
-            AnimationGroup(
-                *[dot.animate.set_z(0) for dot in dots],
-                rate_func=lambda t: t ** 2  # Use a quadratic rate function for the falling effect
-            )
-        )
 
         self.wait(0.5)
         self.play(FadeIn(neutron_track))
