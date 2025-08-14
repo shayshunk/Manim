@@ -13,7 +13,7 @@ class NeutronTrack(ThreeDScene):
         )
 
         neutron_track = Line3D(start=axes.coords_to_point(
-            0, 0, 0), end=axes.coords_to_point(-5.5, 0, 5.5), color=WHITE)
+            0, 0, 0), end=axes.coords_to_point(-5.25, 0, 5.25), color=WHITE)
 
         dots = VGroup()
 
@@ -90,11 +90,15 @@ class NeutronTrack(ThreeDScene):
         self.wait(0.5)
         self.play(FadeIn(neutron_track))
 
-        midpoint = Line3D(start=axes.coords_to_point(-2.75, -1, 2.75),
-                          end=axes.coords_to_point(-2.75, 1, 2.75), color=WHITE)
+        midpoint = Line3D(start=axes.coords_to_point(-2.625, -1, 2.625),
+                          end=axes.coords_to_point(-2.625, 1, 2.625), color=WHITE)
         self.play(Create(midpoint))
 
-        upper_dots = [dot for dot in dots if dot.get_x() <= -2.75]
+        upper_dots = VGroup()
+
+        for dot in dots:
+            if dot.get_x() <= -2.5:
+                upper_dots.add(dot)
 
         self.play(Indicate(upper_dots))
 
