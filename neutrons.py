@@ -12,13 +12,10 @@ class NeutronTrack(ThreeDScene):
                 "x-axis").scale(0.7), Text("y-axis").scale(0.45), Text("z-axis").scale(0.45)
         )
 
-        neutron_track = Arrow3D(start=axes.coords_to_point(
+        neutron_track = Line3D(start=axes.coords_to_point(
             0, 0, 0), end=axes.coords_to_point(-5.5, 0, 5.5), color=WHITE)
 
         dots = VGroup()
-        x_locs = []
-        y_locs = []
-        z_locs = []
 
         for i in range(100):
             xrand = (-0.05 * i)
@@ -30,10 +27,6 @@ class NeutronTrack(ThreeDScene):
             dot = Dot3D(point=axes.coords_to_point(xrand, yrand, zrand),
                         radius=0.025, color=WHITE, fill_opacity=0.5)
             dots.add(dot)
-
-            x_locs.append(xrand)
-            y_locs.append(yrand)
-            z_locs.append(zrand)
 
         self.play(Create(axes), Create(labels))
         self.wait(0.5)
@@ -53,7 +46,7 @@ class NeutronTrack(ThreeDScene):
         )
 
         self.play(Indicate(readout_plane, scale_factor=1.1, color=WHITE))
-        self.play(FadeOut(dots))
+        # self.play(FadeOut(dots))
         self.wait(1)
         self.begin_ambient_camera_rotation(rate=0.1, about="theta")
 
@@ -83,7 +76,13 @@ class NeutronTrack(ThreeDScene):
             elif rand_color == 9:
                 dot_color = BLUE_D
 
-            dot = Dot3D(point=axes.coords_to_point(x_locs[i], y_locs[i], z_locs[i]),
+            xrand = random.uniform(-5, -0.1)
+            zrand = xrand * -1
+            xrand = xrand + random.uniform(-0.25, 0.25)
+            yrand = random.uniform(-0.5, 0.5)
+            zrand = zrand + random.uniform(-0.5, 0.5)
+
+            dot = Dot3D(point=axes.coords_to_point(xrand, yrand, zrand),
                         radius=0.025, color=dot_color, fill_opacity=0.5)
             dots.add(dot)
 
