@@ -16,6 +16,9 @@ class NeutronTrack(ThreeDScene):
             0, 0, 0), end=axes.coords_to_point(-5.5, 0, 5.5), color=WHITE)
 
         dots = VGroup()
+        x_locs = []
+        y_locs = []
+        z_locs = []
 
         for i in range(100):
             xrand = (-0.05 * i)
@@ -48,14 +51,23 @@ class NeutronTrack(ThreeDScene):
             dot = Dot3D(point=axes.coords_to_point(xrand, yrand, zrand),
                         radius=0.025, color=dot_color, fill_opacity=0.5)
             dots.add(dot)
-            print("Dot", i, "is at (", xrand, ",", yrand, ",", zrand, ")")
+
+            x_locs.append(xrand)
+            y_locs.append(yrand)
+            z_locs.append(zrand)
 
         self.play(Create(axes), Create(labels))
         self.wait(0.5)
-        self.begin_ambient_camera_rotation(rate=0.1, about="theta")
+        # self.begin_ambient_camera_rotation(rate=0.1, about="theta")
 
         for i in range(100):
             self.play(Create(dots[i], run_time=0.07))
+
+        self.wait(0.5)
+
+        for i in range(100):
+            self.play(dots[i].animate.move_to(
+                axes.color(x_locs[i], y_locs[i], 0)))
 
         self.wait(0.5)
         self.play(FadeIn(neutron_track))
