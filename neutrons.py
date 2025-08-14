@@ -106,7 +106,7 @@ class NeutronTrack(ThreeDScene):
         self.play(Indicate(reconstructed_dots, scale_factor=1.1, color=ORANGE))
 
         neutron_track_arrow = Arrow3D(start=axes.coords_to_point(
-            0, 0, 0), end=axes.coords_to_point(-5, 0, 5), color=WHITE)
+            0, 0, 0), end=axes.coords_to_point(-6, 0, 6), color=WHITE)
 
         self.play(Transform(neutron_track, neutron_track_arrow))
         self.wait(2)
