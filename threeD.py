@@ -55,7 +55,7 @@ class NeutronTrack(ThreeDScene):
         self.begin_ambient_camera_rotation(rate=0.1, about="theta")
 
         for i in range(100):
-            self.play(Create(dots[i], run_time=0.02))
+            self.play(Create(dots[i], run_time=0.07))
 
         self.wait(0.5)
         self.play(FadeIn(neutron_track))
