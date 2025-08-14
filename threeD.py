@@ -60,20 +60,19 @@ class NeutronTrack(ThreeDScene):
         self.wait(0.5)
         # self.begin_ambient_camera_rotation(rate=0.1, about="theta")
 
-        dot_animations = [Create(dot) for dot in dots]
-        self.play(Succession(*dot_animations))
+        # dot_animations = [Create(dot) for dot in dots]
+        # self.play(Succession(*dot_animations))
+
+        self.play(Create(dots))
 
         self.wait(0.5)
 
-        target_z = 0
-
-        def set_z_coord(point):
-            # The point is a numpy array [x, y, z]
-            new_point = axes.point_to_coords(point)
-            new_point[2] = target_z
-            return axes.coords_to_point(new_point)
-
-        self.play(dots.animate.apply_function(set_z_coord))
+        self.play(
+            AnimationGroup(
+                *[dot.animate.set_z(0) for dot in dots],
+                rate_func=lambda t: t ** 2  # Use a quadratic rate function for the falling effect
+            )
+        )
 
         self.wait(0.5)
         self.play(FadeIn(neutron_track))
