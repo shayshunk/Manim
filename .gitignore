@@ -1,3 +1,7 @@
 # Ignore folders
 __pycache__
 media
+
+# Don't ignore final video
+!media/videos/neutrons/720p30/NeutronTrack.mp4
+!media/videos/neutrons/1080p60/NeutronTrack.mp4
