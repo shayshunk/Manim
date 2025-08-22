@@ -17,11 +17,15 @@ class NeutronTrack(ThreeDScene):
 
         dots = VGroup()
 
-        for i in range(100):
-            xrand = (-0.05 * i)
+        for i in range(150):
+            if i < 100:
+                xrand = (-0.05 * i)
+            else:
+                xrand = random.uniform(-5, -2.5)
+
+            yrand = random.uniform(-0.5, 0.5)
             zrand = xrand * -1
             xrand = xrand + random.uniform(-0.25, 0.25)
-            yrand = random.uniform(-0.5, 0.5)
             zrand = zrand + random.uniform(-0.5, 0.5)
 
             dot = Dot3D(point=axes.coords_to_point(xrand, yrand, zrand),
@@ -51,7 +55,7 @@ class NeutronTrack(ThreeDScene):
 
         reconstructed_dots = VGroup()
 
-        for i in range(100):
+        for i in range(150):
             rand_color = random.randint(1, 10)
             dot_color = BLUE
 
@@ -74,10 +78,14 @@ class NeutronTrack(ThreeDScene):
             elif rand_color == 9:
                 dot_color = BLUE_D
 
-            xrand = random.uniform(-5, -0.1)
+            if i < 100:
+                xrand = random.uniform(-5, -0.1)
+            else:
+                xrand = random.uniform(-5, -2.5)
+
+            yrand = random.uniform(-0.5, 0.5)
             zrand = xrand * -1
             xrand = xrand + random.uniform(-0.25, 0.25)
-            yrand = random.uniform(-0.5, 0.5)
             zrand = zrand + random.uniform(-0.5, 0.5)
 
             dot = Dot3D(point=axes.coords_to_point(xrand, yrand, zrand),
