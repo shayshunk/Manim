@@ -21,7 +21,7 @@ class NeutronTrack(ThreeDScene):
             if i < 100:
                 xrand = (-0.05 * i)
             else:
-                xrand = random.uniform(-5, -2.5)
+                xrand = random.uniform(-2.5, -0.1)
 
             yrand = random.uniform(-0.5, 0.5)
             zrand = xrand * -1
@@ -81,7 +81,7 @@ class NeutronTrack(ThreeDScene):
             if i < 100:
                 xrand = random.uniform(-5, -0.1)
             else:
-                xrand = random.uniform(-5, -2.5)
+                xrand = random.uniform(-2.5, -0.1)
 
             yrand = random.uniform(-0.5, 0.5)
             zrand = xrand * -1
